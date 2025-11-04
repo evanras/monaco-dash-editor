@@ -20,22 +20,40 @@ NumberType = typing.Union[
 
 class MonacoDashEditor(Component):
     """A MonacoDashEditor component.
-ExampleComponent is an example component.
-It takes a property, `label`, and
-displays it.
-It renders an input with the property `value`
-which is editable by the user.
+
 
 Keyword arguments:
 
-- id (string; optional):
-    The ID used to identify this component in Dash callbacks.
+- id (dict; optional):
+    The ID used to identify this component in Dash callbacks. Can be a
+    string or a dictionary with additional data attributes.
 
-- label (string; required):
-    A label that will be printed when this component is rendered.
+    `id` is a string | dict with keys:
 
-- value (string; optional):
-    The value displayed in the input."""
+    - id (string; required)
+
+    - __extras__ (dict with strings as keys and values of type string; optional)
+
+- className (string; default ''):
+    Additional CSS class for the container.
+
+- height (string; default '300px'):
+    Height of the editor.
+
+- language (string; default 'javascript'):
+    The language of the editor.
+
+- options (dict; optional):
+    Additional Monaco Editor options.
+
+- readOnly (boolean; default False):
+    Make editor read-only.
+
+- theme (string; default 'vs-light'):
+    Editor theme.
+
+- value (string; default ''):
+    Current code/content."""
     _children_props = []
     _base_nodes = ['children']
     _namespace = 'monaco_dash_editor'
@@ -45,23 +63,24 @@ Keyword arguments:
     def __init__(
         self,
         id: typing.Optional[typing.Union[str, dict]] = None,
-        label: typing.Optional[str] = None,
+        height: typing.Optional[str] = None,
+        language: typing.Optional[str] = None,
         value: typing.Optional[str] = None,
+        theme: typing.Optional[str] = None,
+        readOnly: typing.Optional[bool] = None,
+        options: typing.Optional[dict] = None,
+        className: typing.Optional[str] = None,
+        style: typing.Optional[typing.Any] = None,
         **kwargs
     ):
-        self._prop_names = ['id', 'label', 'value']
+        self._prop_names = ['id', 'className', 'height', 'language', 'options', 'readOnly', 'style', 'theme', 'value']
         self._valid_wildcard_attributes =            []
-        self.available_properties = ['id', 'label', 'value']
+        self.available_properties = ['id', 'className', 'height', 'language', 'options', 'readOnly', 'style', 'theme', 'value']
         self.available_wildcard_properties =            []
         _explicit_args = kwargs.pop('_explicit_args')
         _locals = locals()
         _locals.update(kwargs)  # For wildcard attrs and excess named props
         args = {k: _locals[k] for k in _explicit_args}
-
-        for k in ['label']:
-            if k not in args:
-                raise TypeError(
-                    'Required argument `' + k + '` was not specified.')
 
         super(MonacoDashEditor, self).__init__(**args)
 

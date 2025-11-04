@@ -2,7 +2,7 @@
   "name": "monaco_dash_editor",
   "version": "0.0.1",
   "description": "Monaco Editor for Dash",
-"repository": {
+  "repository": {
     "type": "git",
     "url": "git://github.com/evanras/monaco-dash-editor.git"
   },
@@ -24,6 +24,7 @@
   "author": "Evan Rasmussen <evanras@umich.edu>",
   "license": "MIT",
   "dependencies": {
+    "monaco-editor": "^0.53.0",
     "ramda": "^0.26.1"
   },
   "devDependencies": {
@@ -37,7 +38,7 @@
     "babel-loader": "^9.1.2",
     "copyfiles": "^2.1.1",
     "css-loader": "^6.8.1",
-    "eslint": "^6.0.1",
+    "eslint": "^9.39.1",
     "eslint-config-prettier": "^6.0.0",
     "eslint-plugin-import": "^2.18.0",
     "eslint-plugin-react": "^7.14.2",
@@ -46,10 +47,10 @@
     "react-docgen": "^5.4.3",
     "react-dom": "^16.8.6",
     "style-loader": "^3.3.3",
-    "styled-jsx": "^3.2.1",
+    "styled-jsx": "^5.1.7",
     "webpack": "^5.84.1",
     "webpack-cli": "^5.1.1",
-    "webpack-dev-server": "^4.15.0"
+    "webpack-dev-server": "^5.2.2"
   },
   "engines": {
     "node": ">=8.11.0",
