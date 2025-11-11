@@ -10,29 +10,52 @@ app = dash.Dash(__name__)
 # Define the layout
 app.layout = html.Div(style={"margin": "4em"}, children=[
     # JSON Editor
+    # Theme Selector
     html.Div([
+        html.H3("Theme Selector"),
+        dcc.Dropdown(
+            id="theme-selector",
+            options=[
+                {"label": "Light", "value": "vs-light"},
+                {"label": "Dark", "value": "vs-dark"},
+                {"label": "High Contrast", "value": "hc-black"}
+            ],
+            value="vs-light",
+            clearable=False
+        )
+    ]),
+    html.Div([
+        html.Button(id="display-editor", children=["Click to show"]),
         html.H3("JSON Editor"),
-        MonacoDashEditor(
-            id="json-editor",
-            language="json",
-            height="300px",
-            value="""{
-    "name": "John Doe",
-    "age": 30,
-    "city": "New York",
-    "isStudent": false,
-    "hobbies": [
-        "reading",
-        "swimming",
-        "coding"
-    ]
-}""",
-            options={
-                "minimap": {"enabled": False},
-                "formatOnType": True
-            }
+        html.Div(
+            id="dynamic-monaco",
+            style={"display": "none"},
+            children=[
+                MonacoDashEditor(
+                    theme="vs-dark",
+                    id="json-editor",
+                    language="json",
+                    height="300px",
+                    value="""{
+                        "name": "John Doe",
+                        "age": 30,
+                        "city": "New York",
+                        "isStudent": false,
+                        "hobbies": [
+                            "reading",
+                            "swimming",
+                            "coding"
+                        ]
+                    }""",
+                    options={
+                        "automaticLayout": True,
+                        "minimap": {"enabled": False},
+                        "formatOnType": True
+                    }
+                ),
+            ]
         ),
-        html.Div(id="json-output")
+       html.Div(id="json-output")
     ]),
 
     # YAML Editor
@@ -66,7 +89,8 @@ spec:
             readOnly=False,
             options={
                 "fontSize": 12,
-                "wordWrap": "on"
+                "wordWrap": "on",
+                "theme": "vs-dark"
             }
         ),
         html.Div(id="yaml-output")
@@ -127,21 +151,6 @@ LIMIT 10;
         ),
         html.Div(id="sql-output")
     ]),
-
-    # Theme Selector
-    html.Div([
-        html.H3("Theme Selector"),
-        dcc.Dropdown(
-            id="theme-selector",
-            options=[
-                {"label": "Light", "value": "vs-light"},
-                {"label": "Dark", "value": "vs-dark"},
-                {"label": "High Contrast", "value": "hc-black"}
-            ],
-            value="vs-light",
-            clearable=False
-        )
-    ])
 ])
 
 # Callback to update theme for all editors
@@ -185,6 +194,19 @@ def update_python_output(value):
 )
 def update_sql_output(value):
     return f"SQL Query: {value}"
+
+
+@app.callback(
+    Output("dynamic-monaco", "style"),
+    Input("display-editor", "n_clicks"),
+    prevent_initial_call=True,
+)
+def display_monaco_editor(n_clicks):
+    return {
+        "display": "block", 
+        "width": "100%",  # Ensure full width
+        "height": "300px"  # Specify height
+    }
 
 # Run the app
 if __name__ == "__main__":
