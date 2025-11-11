@@ -1,6 +1,6 @@
-import React, { useRef, useEffect, useState } from 'react';
+import React from 'react';
+import Editor from '@monaco-editor/react';
 import PropTypes from 'prop-types';
-import * as Monaco from 'monaco-editor';
 
 const MonacoDashEditor = (props) => {
     const {
@@ -16,86 +16,34 @@ const MonacoDashEditor = (props) => {
         style
     } = props;
 
-    const editorRef = useRef(null);
-    const containerRef = useRef(null);
-    const [editor, setEditor] = useState(null);
-
-    useEffect(() => {
-        // Create editor if it doesn't exist
-        if (containerRef.current && !editor) {
-            const monacoEditor = Monaco.editor.create(containerRef.current, {
-                value: value || '',
-                language: language || 'javascript',
-                theme: theme || 'vs-light',
-                readOnly: readOnly || false,
-                height: height || '300px',
-                // Merge default options with user-provided options
-                ...options,
-            });
-
-            // Set up change listener
-            const changeListener = monacoEditor.onDidChangeModelContent(() => {
-                const currentValue = monacoEditor.getValue();
-                setProps({
-                    value: currentValue,
-                });
-            });
-
-            setEditor(monacoEditor);
-            editorRef.current = monacoEditor;
-
-            // Cleanup
-            return () => {
-                changeListener.dispose();
-                monacoEditor.dispose();
-            };
-        }
-    }, []);
-
-    // Update value if changed externally
-    useEffect(() => {
-        if (editor && value !== editor.getValue()) {
-            editor.setValue(value || '');
-        }
-    }, [value, editor]);
-
-    // Update read-only state
-    useEffect(() => {
-        if (editor) {
-            editor.updateOptions({ readOnly: readOnly || false });
-        }
-    }, [readOnly, editor]);
-
-    // Update theme
-    useEffect(() => {
-        if (editor) {
-            Monaco.editor.setTheme(theme || 'vs-light');
-        }
-    }, [theme, editor]);
-
-    // Prepare ID and data attributes
-    const componentId = typeof id === 'object' ? id.id : id;
-    const dataAttributes = typeof id === 'object'
-        ? Object.keys(id)
-            .filter(key => key !== 'id')
-            .reduce((acc, key) => {
-                acc[`data-${key}`] = id[key];
-                return acc;
-            }, {})
-        : {};
+    const handleEditorChange = (newValue) => {
+        setProps({
+            value: newValue
+        });
+    };
 
     return (
         <div
-            id={componentId}
-            ref={containerRef}
+            id={typeof id === 'object' ? id.id : id}
             className={className}
             style={{
                 height: height || '300px',
                 width: '100%',
                 ...style
             }}
-            {...dataAttributes}
-        />
+        >
+            <Editor
+                height="100%"
+                language={language || 'javascript'}
+                theme={theme || 'vs-light'}
+                value={value || ''}
+                options={{
+                    readOnly: readOnly || false,
+                    ...options
+                }}
+                onChange={handleEditorChange}
+            />
+        </div>
     );
 };
 
@@ -126,11 +74,14 @@ MonacoDashEditor.propTypes = {
 
     /**
      * Height of the editor
+     * Defaults to '300px'
      */
     height: PropTypes.string,
 
     /**
-     * The language of the editor
+     * The programming language for syntax highlighting
+     * Supports various languages like 'javascript', 'python', 'json', etc.
+     * Defaults to 'javascript'
      */
     language: PropTypes.string,
 
@@ -141,32 +92,43 @@ MonacoDashEditor.propTypes = {
     setProps: PropTypes.func,
 
     /**
-     * Current code/content
+     * Current content/value of the editor
+     * Defaults to an empty string
      */
     value: PropTypes.string,
 
     /**
      * Editor theme
+     * Supports 'vs-light', 'vs-dark', 'hc-black'
+     * Defaults to 'vs-light'
      */
     theme: PropTypes.string,
 
     /**
      * Make editor read-only
+     * Prevents user from modifying the content
+     * Defaults to false
      */
     readOnly: PropTypes.bool,
 
     /**
-     * Additional Monaco Editor options
+     * Additional Monaco Editor configuration options
+     * Allows fine-tuning of editor behavior and appearance
+     * Defaults to an empty object
      */
     options: PropTypes.object,
 
     /**
      * Additional CSS class for the container
+     * Allows custom styling of the editor container
+     * Defaults to an empty string
      */
     className: PropTypes.string,
 
     /**
      * Inline styles for the container
+     * Allows direct styling of the editor container
+     * Defaults to an empty object
      */
     style: PropTypes.object,
 };

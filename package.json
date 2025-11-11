@@ -24,7 +24,6 @@
   "author": "Evan Rasmussen <evanras@umich.edu>",
   "license": "MIT",
   "dependencies": {
-    "monaco-editor": "^0.53.0",
     "ramda": "^0.26.1"
   },
   "devDependencies": {
@@ -32,6 +31,7 @@
     "@babel/plugin-proposal-object-rest-spread": "^7.20.7",
     "@babel/preset-env": "^7.22.2",
     "@babel/preset-react": "^7.22.3",
+    "@monaco-editor/react": "^4.7.0",
     "@plotly/dash-component-plugins": "^1.2.3",
     "@plotly/webpack-dash-dynamic-import": "^1.2.0",
     "babel-eslint": "^10.1.0",

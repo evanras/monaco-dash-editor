@@ -22,21 +22,35 @@ those elements have the following types:
   - __extras__ (list with named elements and values of type character; optional). The ID used to identify this component in Dash callbacks.
 Can be a string or a dictionary with additional data attributes.}
 
-\item{className}{Character. Additional CSS class for the container}
+\item{className}{Character. Additional CSS class for the container
+Allows custom styling of the editor container
+Defaults to an empty string}
 
-\item{height}{Character. Height of the editor}
+\item{height}{Character. Height of the editor
+Defaults to '300px'}
 
-\item{language}{Character. The language of the editor}
+\item{language}{Character. The programming language for syntax highlighting
+Supports various languages like 'javascript', 'python', 'json', etc.
+Defaults to 'javascript'}
 
-\item{options}{Named list. Additional Monaco Editor options}
+\item{options}{Named list. Additional Monaco Editor configuration options
+Allows fine-tuning of editor behavior and appearance
+Defaults to an empty object}
 
-\item{readOnly}{Logical. Make editor read-only}
+\item{readOnly}{Logical. Make editor read-only
+Prevents user from modifying the content
+Defaults to false}
 
-\item{style}{Named list. Inline styles for the container}
+\item{style}{Named list. Inline styles for the container
+Allows direct styling of the editor container
+Defaults to an empty object}
 
-\item{theme}{Character. Editor theme}
+\item{theme}{Character. Editor theme
+Supports 'vs-light', 'vs-dark', 'hc-black'
+Defaults to 'vs-light'}
 
-\item{value}{Character. Current code/content}
+\item{value}{Character. Current content/value of the editor
+Defaults to an empty string}
 }
 
 \value{named list of JSON elements corresponding to React.js properties and their values}

@@ -35,25 +35,31 @@ Keyword arguments:
     - __extras__ (dict with strings as keys and values of type string; optional)
 
 - className (string; default ''):
-    Additional CSS class for the container.
+    Additional CSS class for the container Allows custom styling of
+    the editor container Defaults to an empty string.
 
 - height (string; default '300px'):
-    Height of the editor.
+    Height of the editor Defaults to '300px'.
 
 - language (string; default 'javascript'):
-    The language of the editor.
+    The programming language for syntax highlighting Supports various
+    languages like 'javascript', 'python', 'json', etc. Defaults to
+    'javascript'.
 
 - options (dict; optional):
-    Additional Monaco Editor options.
+    Additional Monaco Editor configuration options Allows fine-tuning
+    of editor behavior and appearance Defaults to an empty object.
 
 - readOnly (boolean; default False):
-    Make editor read-only.
+    Make editor read-only Prevents user from modifying the content
+    Defaults to False.
 
 - theme (string; default 'vs-light'):
-    Editor theme.
+    Editor theme Supports 'vs-light', 'vs-dark', 'hc-black' Defaults
+    to 'vs-light'.
 
 - value (string; default ''):
-    Current code/content."""
+    Current content/value of the editor Defaults to an empty string."""
     _children_props = []
     _base_nodes = ['children']
     _namespace = 'monaco_dash_editor'
