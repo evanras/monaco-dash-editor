@@ -1,6 +1,6 @@
 {
   "name": "monaco_dash_editor",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Monaco Editor for Dash",
   "repository": {
     "type": "git",

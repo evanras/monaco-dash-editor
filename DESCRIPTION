@@ -1,6 +1,6 @@
 Package: monacoDashEditor
 Title: Monaco Editor for Dash
-Version: 0.0.1
+Version: 0.0.2
 Description: Monaco Editor for Dash
 Depends: R (>= 3.0.2)
 Imports: 
